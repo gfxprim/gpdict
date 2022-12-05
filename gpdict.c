@@ -55,6 +55,17 @@ const gp_widget_table_col_ops lookup_res_col_ops = {
 	}
 };
 
+static enum gp_markup_fmt entry_markup_fmt(struct sd_entry *entry)
+{
+	switch (entry->fmt) {
+	case SD_ENTRY_PANGO_MARKUP:
+	case SD_ENTRY_HTML:
+		return GP_MARKUP_HTML;
+	default:
+		return GP_MARKUP_GFXPRIM;
+	}
+}
+
 int edit_event(gp_widget_event *ev)
 {
 	struct sd_lookup_res tmp;
@@ -75,7 +86,8 @@ int edit_event(gp_widget_event *ev)
 		sd_free_entry(entry);
 		entry = sd_get_entry(dict, res.min);
 
-		gp_widget_markup_set(result, entry->data);
+
+		gp_widget_markup_set(result, entry_markup_fmt(entry), entry->data);
 		gp_widget_redraw(lookup_res);
 		gp_widget_label_set(lookup, sd_idx_to_word(dict, res.min));
 	break;
