@@ -62,7 +62,7 @@ static enum gp_markup_fmt entry_markup_fmt(struct sd_entry *entry)
 	case SD_ENTRY_HTML:
 		return GP_MARKUP_HTML;
 	default:
-		return GP_MARKUP_GFXPRIM;
+		return GP_MARKUP_PLAINTEXT;
 	}
 }
 
