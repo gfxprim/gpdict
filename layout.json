@@ -13,9 +13,10 @@
     "align": "fill", "col_ops": "lookup_res_col_ops",
     "uid": "lookup_res",
     "header": [
-     {"min_size": 10, "id": "res"}
+     {"min_size": 10, "id": "res", "fill": 1}
     ]
    }
-  ]
+  ],
+  "fill": "5, 1"
  }
 }
