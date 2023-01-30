@@ -12,6 +12,16 @@ all: $(BIN) $(DEP)
 
 -include: $(DEP)
 
+install:
+	install -d $(DESTDIR)/etc/gp_apps/$(BIN)/
+	install -m 644 layout.json -t $(DESTDIR)/etc/gp_apps/$(BIN)/
+	install -d $(DESTDIR)/usr/bin/
+	install $(BIN) -t $(DESTDIR)/usr/bin/
+	install -d $(DESTDIR)/usr/share/applications/
+	install -m 744 $(BIN).desktop -t $(DESTDIR)/usr/share/applications/
+	install -d $(DESTDIR)/usr/share/$(BIN)/
+	install -m 644 $(BIN).png -t $(DESTDIR)/usr/share/$(BIN)/
+
 clean:
 	rm -f $(BIN) *.dep *.o
 

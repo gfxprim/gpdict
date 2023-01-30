@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=gpdict
+GenericName=Dictionary
+Version=1.0
+Comment=Stardict Compatible Dictionary
+Exec=gpdict
+Icon=/usr/share/gpdict/gpdict.png
+Terminal=false
+Type=Application
+Categories=Utility;Office;Dictionary;
