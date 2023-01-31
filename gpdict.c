@@ -2,7 +2,7 @@
 
 /*
 
-    Copyright (C) 2022 Cyril Hrubis <metan@ucw.cz>
+    Copyright (C) 2022-2023 Cyril Hrubis <metan@ucw.cz>
 
  */
 
@@ -96,11 +96,25 @@ int edit_event(gp_widget_event *ev)
 	return 0;
 }
 
+static gp_app_info app_info = {
+	.name = "gpdict",
+	.desc = "A stardict compatible dictionary",
+	.version = "1.0",
+	.license = "GPL-2.0-or-later",
+	.url = "http://github.com/gfxprim/gpdict",
+	.authors = (gp_app_info_author []) {
+		{.name = "Cyril Hrubis", .email = "metan@ucw.cz", .years = "2022-2023"},
+		{}
+	}
+};
+
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;
-	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
 
+	gp_app_info_set(&app_info);
+
+	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
 	result = gp_widget_by_uid(uids, "result", GP_WIDGET_MARKUP);
 	lookup = gp_widget_by_uid(uids, "lookup", GP_WIDGET_LABEL);
 	lookup_res = gp_widget_by_uid(uids, "lookup_res", GP_WIDGET_TABLE);
