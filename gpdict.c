@@ -10,6 +10,7 @@
 #include <gfxprim.h>
 
 static struct sd_dict_paths dict_paths;
+static size_t dict_paths_idx = 0;
 static struct sd_dict *dict;
 static struct sd_entry *entry;
 static struct sd_lookup_res res;
@@ -17,6 +18,8 @@ static struct sd_lookup_res res;
 static gp_widget *result;
 static gp_widget *lookup_res;
 static gp_widget *lookup;
+
+static gp_widget *layout_switch;
 
 static int lookup_res_seek_row(gp_widget *self, int op, unsigned int pos)
 {
@@ -108,25 +111,91 @@ static gp_app_info app_info = {
 	}
 };
 
+static const char *get_dict_name(gp_widget *self, size_t idx)
+{
+	(void) self;
+
+	if (idx >= dict_paths.dict_cnt)
+		return NULL;
+
+	return dict_paths.paths[idx]->name;
+}
+
+static void set_dict(gp_widget *self, size_t idx)
+{
+	(void) self;
+
+	if (idx == dict_paths_idx)
+		return;
+
+	sd_close_dict(dict);
+	dict = sd_open_dict(dict_paths.paths[idx]->dir, dict_paths.paths[idx]->name);
+
+	dict_paths_idx = idx;
+}
+
+static size_t get_dict(gp_widget *self, enum gp_widget_choice_op op)
+{
+	(void) self;
+
+	switch (op) {
+	case GP_WIDGET_CHOICE_OP_SEL:
+		return dict_paths_idx;
+	case GP_WIDGET_CHOICE_OP_CNT:
+		return dict_paths.dict_cnt;
+	}
+
+	return 0;
+}
+
+struct gp_widget_choice_ops dict_selection = {
+	.get_choice = get_dict_name,
+	.get = get_dict,
+	.set = set_dict,
+};
+
+//struct gp_widget_choice_ops *dict_selection = &dict_selection_;
+
+int select_layout_0(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	gp_widget_switch_layout(layout_switch, 0);
+
+	return 0;
+}
+
+int select_layout_1(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	gp_widget_switch_layout(layout_switch, 1);
+
+	return 0;
+}
+
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;
 
 	gp_app_info_set(&app_info);
 
-	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
-	result = gp_widget_by_uid(uids, "result", GP_WIDGET_MARKUP);
-	lookup = gp_widget_by_uid(uids, "lookup", GP_WIDGET_LABEL);
-	lookup_res = gp_widget_by_uid(uids, "lookup_res", GP_WIDGET_TABLE);
-
-	gp_htable_free(uids);
-
-	sd_dict_paths_lookup(&dict_paths);
+	sd_lookup_dict_paths(&dict_paths);
 
 	if (!dict_paths.paths)
 		return 1;
 
-	dict = sd_open_dict(dict_paths.paths->dir, dict_paths.paths->name);
+	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
+	result = gp_widget_by_uid(uids, "result", GP_WIDGET_MARKUP);
+	lookup = gp_widget_by_uid(uids, "lookup", GP_WIDGET_LABEL);
+	lookup_res = gp_widget_by_uid(uids, "lookup_res", GP_WIDGET_TABLE);
+	layout_switch = gp_widget_by_uid(uids, "layout_switch", GP_WIDGET_SWITCH);
+
+	gp_htable_free(uids);
+
+	dict = sd_open_dict(dict_paths.paths[0]->dir, dict_paths.paths[0]->name);
 	if (!dict)
 		return 1;
 

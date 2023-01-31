@@ -1,22 +1,37 @@
 {
  "info": {"version": 1, "license": "GPL-2.0-or-later", "author": "Cyril Hrubis <metan@ucw.cz>"},
  "layout": {
-  "type": "hbox", "align": "fill", "widgets": [
-   {"type": "vbox", "align": "fill", "widgets": [
-     {"type": "tbox", "halign": "fill", "on_event": "edit_event", "len": 16},
-     {"type": "label", "halign": "fill", "uid": "lookup", "text": "---", "tattr": "large|left"},
-     {"type": "markup", "align": "fill", "uid": "result", "text": "\n\n\n\n\n"}
+  "type": "switch", "align": "fill", "uid": "layout_switch",
+  "widgets": [
+    {"type": "hbox", "align": "fill", "widgets": [
+     {"type": "vbox", "align": "fill", "widgets": [
+       {"type": "tbox", "halign": "fill", "on_event": "edit_event", "len": 16},
+       {"type": "label", "halign": "fill", "uid": "lookup", "text": "---", "tattr": "large|left"},
+       {"type": "markup", "align": "fill", "uid": "result", "text": "\n\n\n\n\n"}
+      ],
+      "fill": "0, 0, 1"
+     },
+     {"type": "vbox", "align": "fill", "widgets": [
+       {"type": "table", "min_rows": 10,
+        "align": "fill", "col_ops": "lookup_res_col_ops",
+        "uid": "lookup_res",
+        "header": [
+         {"min_size": 10, "id": "res", "fill": 1}
+        ]
+       },
+       {"type": "button", "label": "Settings", "btype": "settings", "align": "hfill", "on_event": "select_layout_1"}
+      ]
+     }
     ],
-    "fill": "0, 0, 1"
+    "fill": "5, 1"
    },
-   {"type": "table", "min_rows": 10,
-    "align": "fill", "col_ops": "lookup_res_col_ops",
-    "uid": "lookup_res",
-    "header": [
-     {"min_size": 10, "id": "res", "fill": 1}
+   {"type": "vbox", "align": "fill",
+   "widgets": [
+     {"type": "label", "text": "Choose dictionary", "tattr": "bold"},
+     {"type": "radiobutton", "ops": "dict_selection"},
+     {"type": "button", "label": "Back", "btype": "prev", "on_event": "select_layout_0"}
     ]
    }
-  ],
-  "fill": "5, 1"
+  ]
  }
 }
