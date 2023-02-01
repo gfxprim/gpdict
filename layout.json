@@ -9,7 +9,7 @@
        {"type": "label", "halign": "fill", "uid": "lookup", "text": "---", "tattr": "large|left"},
        {"type": "markup", "align": "fill", "uid": "result", "text": "\n\n\n\n\n"}
       ],
-      "fill": "0, 0, 1"
+      "cell-fill": "0, 0, 1"
      },
      {"type": "vbox", "align": "fill", "border": "none", "widgets": [
        {"type": "table", "min_rows": 10,
@@ -21,17 +21,19 @@
        },
        {"type": "button", "label": "Settings", "btype": "settings", "align": "hfill", "on_event": "select_layout_1"}
       ],
-      "fill": "1, 0"
+      "cell-fill": "1, 0"
      }
     ],
-    "fill": "5, 1"
+    "cell-fill": "5, 1"
    },
    {"type": "vbox", "align": "fill",
    "widgets": [
      {"type": "label", "text": "Choose dictionary", "tattr": "bold"},
      {"type": "radiobutton", "ops": "dict_selection"},
      {"type": "button", "label": "Back", "btype": "prev", "on_event": "select_layout_0"}
-    ]
+    ],
+    "cell-fill": "0, 0, 0",
+    "padd-fill": "1, 0, 1, 0"
    }
   ]
  }
