@@ -12,7 +12,6 @@
 static struct sd_dict_paths dict_paths;
 static size_t dict_paths_idx = 0;
 static struct sd_dict *dict;
-static struct sd_entry *entry;
 static struct sd_lookup_res res;
 
 static gp_widget *result;
@@ -50,14 +49,6 @@ static int res_get_elem(gp_widget *self, gp_widget_table_cell *cell, unsigned in
 	return 1;
 }
 
-const gp_widget_table_col_ops lookup_res_col_ops = {
-	.seek_row = lookup_res_seek_row,
-	.get_cell = res_get_elem,
-	.col_map = {
-		{.id = "res", .idx = 0}
-	}
-};
-
 static enum gp_markup_fmt entry_markup_fmt(struct sd_entry *entry)
 {
 	switch (entry->fmt) {
@@ -68,6 +59,39 @@ static enum gp_markup_fmt entry_markup_fmt(struct sd_entry *entry)
 		return GP_MARKUP_PLAINTEXT;
 	}
 }
+
+static void show_entry(unsigned int idx)
+{
+	struct sd_entry *entry;
+
+	entry = sd_get_entry(dict, idx);
+	gp_widget_markup_set(result, entry_markup_fmt(entry), entry->data);
+	gp_widget_redraw(lookup_res);
+	gp_widget_label_set(lookup, sd_idx_to_word(dict, idx));
+	sd_free_entry(entry);
+}
+
+static int lookup_res_set(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_WIDGET)
+		return 0;
+
+	if (ev->sub_type != GP_WIDGET_TABLE_SELECT)
+		return 0;
+
+	show_entry(res.min + ev->self->tbl->selected_row);
+
+	return 0;
+}
+
+const gp_widget_table_col_ops lookup_res_col_ops = {
+	.seek_row = lookup_res_seek_row,
+	.get_cell = res_get_elem,
+	.on_event = lookup_res_set,
+	.col_map = {
+		{.id = "res", .idx = 0}
+	}
+};
 
 int edit_event(gp_widget_event *ev)
 {
@@ -88,13 +112,7 @@ int edit_event(gp_widget_event *ev)
 		return 0;
 	case GP_WIDGET_TBOX_EDIT:
 		sd_lookup_dict(dict, ev->self->tbox->buf, &res);
-		sd_free_entry(entry);
-		entry = sd_get_entry(dict, res.min);
-
-
-		gp_widget_markup_set(result, entry_markup_fmt(entry), entry->data);
-		gp_widget_redraw(lookup_res);
-		gp_widget_label_set(lookup, sd_idx_to_word(dict, res.min));
+		show_entry(res.min);
 	break;
 	}
 
