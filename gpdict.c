@@ -197,6 +197,36 @@ int select_layout_1(gp_widget_event *ev)
 	return 0;
 }
 
+static void restore_last_used_dict(void)
+{
+	char dict_name[128];
+	unsigned int i;
+
+	if (gp_app_cfg_scanf("gpdict", "selected_dict.txt", "%127s", dict_name) != 1) {
+		set_dict(NULL, 0);
+		return;
+	}
+
+	for (i = 0; i < dict_paths.dict_cnt; i++) {
+		if (!strcmp(dict_paths.paths[i]->name, dict_name)) {
+			set_dict(NULL, i);
+			return;
+		}
+	}
+
+	set_dict(NULL, 0);
+}
+
+static int save_last_used_dict(gp_widget_event *ev)
+{
+	if (ev->type != GP_WIDGET_EVENT_FREE)
+		return 0;
+
+	gp_app_cfg_printf("gpdict", "selected_dict.txt", "%s",
+	                  dict_paths.paths[dict_paths_idx]->name);
+	return 1;
+}
+
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;
@@ -204,6 +234,8 @@ int main(int argc, char *argv[])
 	gp_app_info_set(&app_info);
 
 	sd_lookup_dict_paths(&dict_paths);
+
+	restore_last_used_dict();
 
 	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
 	result = gp_widget_by_uid(uids, "result", GP_WIDGET_MARKUP);
@@ -214,7 +246,7 @@ int main(int argc, char *argv[])
 
 	gp_htable_free(uids);
 
-	set_dict(NULL, 0);
+	gp_app_on_event_set(save_last_used_dict);
 
 	gp_widgets_main_loop(layout, "gpdict", NULL, argc, argv);
 
