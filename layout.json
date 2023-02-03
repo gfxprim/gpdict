@@ -31,7 +31,11 @@
    "widgets": [
      {"type": "label", "text": "Choose dictionary", "tattr": "bold"},
      {"type": "radiobutton", "ops": "dict_selection"},
-     {"type": "button", "label": "Back", "btype": "prev", "on_event": "select_layout_0"}
+     {"type": "hbox", "align": "hfill", "border": "none", "uniform": true, "widgets": [
+       {"type": "button", "align": "hfill", "label": "Back", "btype": "prev", "on_event": "select_layout_0"},
+       {"type": "button", "align": "hfill", "label": "Download dicts", "on_event": "download_dicts"}
+      ]
+     }
     ],
     "cell-fill": "0, 0, 0",
     "padd-fill": "1, 0, 1, 0"

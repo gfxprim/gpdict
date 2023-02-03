@@ -1,0 +1,18 @@
+[
+ {"license": "GNU/FDL",
+  "lang": "En-Cz",
+  "URL": "https://dl.cihar.com/slovnik/stardict-english-czech-latest.tar.gz"},
+ {"license": "GNU/FDL",
+  "lang": "De-Cz",
+  "URL": "https://dl.cihar.com/slovnik/stardict-german-czech-latest.tar.gz"},
+ {"license": "CC-BY-3.0",
+  "lang": "Cz-Cz",
+  "type": "Loanwords",
+  "URL": "https://dl.cihar.com/slovnik/stardict-czech-latest.tar.gz"},
+ {"license": "GNU/FDL",
+  "lang": "En-Sk",
+  "URL": "http://www.sk-spell.sk.cx/files/stardict-mass-1.1.tar.gz"},
+ {"license": "GNU/FDL",
+  "lang": "Sk-En",
+  "URL": "http://www.sk-spell.sk.cx/files/stardict-msas-1.1.tar.gz"}
+]

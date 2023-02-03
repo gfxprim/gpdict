@@ -1,9 +1,6 @@
 //SPDX-License-Identifier: GPL-2.0-or-later
-
 /*
-
-    Copyright (C) 2022-2023 Cyril Hrubis <metan@ucw.cz>
-
+ * Copyright (C) 2022-2023 Cyril Hrubis <metan@ucw.cz>
  */
 
 #include <libstardict.h>

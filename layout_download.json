@@ -1,0 +1,22 @@
+{
+ "info": {"version": 1, "license": "GPL-2.0-or-later", "author": "Cyril Hrubis <metan@ucw.cz>"},
+ "layout": {
+  "type": "vbox", "align": "fill", "widgets": [
+   {"type": "table", "on_event": "download_url", "min_rows": 10,
+    "align": "fill", "col_ops": "url_table_ops", "uid": "url_table",
+    "header": [
+     {"min_size": 5, "id": "lang", "fill": 1, "label": "Language"},
+     {"min_size": 9, "id": "type", "fill": 1, "label": "Type"},
+     {"min_size": 9, "id": "license", "fill": 1, "label": "License"},
+     {"min_size": 20, "id": "url", "fill": 10, "label": "URL"}
+    ]
+   },
+   {"type": "hbox", "align": "hfill", "border": "none", "uniform": true, "widgets": [
+     {"type": "button", "align": "hfill", "label": "Back", "btype": "prev", "on_event": "exit_dialog"},
+     {"type": "button", "align": "hfill", "label": "Download", "btype": "download", "on_event": "download_url"}
+    ]
+   }
+  ],
+  "cell-fill": "1, 0"
+ }
+}
