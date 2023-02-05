@@ -154,7 +154,7 @@ static void set_dict(gp_widget *self, size_t idx)
 	dict_paths_idx = idx;
 
 	if (dict_name)
-		gp_widget_label_set(dict_name, dict_paths.paths[idx]->name);
+		gp_widget_label_set(dict_name, dict->book_name);
 }
 
 static size_t get_dict(gp_widget *self, enum gp_widget_choice_op op)
