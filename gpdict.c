@@ -8,6 +8,7 @@
 
 static struct sd_dict_paths dict_paths;
 static size_t dict_paths_idx = 0;
+static size_t last_dict_idx = -1;
 static struct sd_dict *dict;
 static struct sd_lookup_res res;
 
@@ -211,6 +212,7 @@ static void restore_last_used_dict(void)
 	for (i = 0; i < dict_paths.dict_cnt; i++) {
 		if (!strcmp(dict_paths.paths[i]->name, dict_name)) {
 			set_dict(NULL, i);
+			last_dict_idx = i;
 			return;
 		}
 	}
@@ -221,6 +223,9 @@ static void restore_last_used_dict(void)
 static int save_last_used_dict(gp_widget_event *ev)
 {
 	if (ev->type != GP_WIDGET_EVENT_FREE)
+		return 0;
+
+	if (dict_paths_idx == last_dict_idx)
 		return 0;
 
 	gp_app_cfg_printf("gpdict", "selected_dict.txt", "%s",
