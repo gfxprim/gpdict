@@ -241,14 +241,14 @@ int main(int argc, char *argv[])
 
 	sd_lookup_dict_paths(&dict_paths);
 
-	restore_last_used_dict();
-
 	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
 	result = gp_widget_by_uid(uids, "result", GP_WIDGET_MARKUP);
 	lookup = gp_widget_by_uid(uids, "lookup", GP_WIDGET_LABEL);
 	lookup_res = gp_widget_by_uid(uids, "lookup_res", GP_WIDGET_TABLE);
 	layout_switch = gp_widget_by_uid(uids, "layout_switch", GP_WIDGET_SWITCH);
 	dict_name = gp_widget_by_uid(uids, "dict_name", GP_WIDGET_LABEL);
+
+	restore_last_used_dict();
 
 	gp_htable_free(uids);
 
