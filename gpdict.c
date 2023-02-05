@@ -137,7 +137,7 @@ static const char *get_dict_name(gp_widget *self, size_t idx)
 	if (idx >= dict_paths.dict_cnt)
 		return NULL;
 
-	return dict_paths.paths[idx]->name;
+	return dict_paths.paths[idx]->book_name;
 }
 
 static void set_dict(gp_widget *self, size_t idx)
@@ -151,7 +151,7 @@ static void set_dict(gp_widget *self, size_t idx)
 //		return;
 
 	sd_close_dict(dict);
-	dict = sd_open_dict(dict_paths.paths[idx]->dir, dict_paths.paths[idx]->name);
+	dict = sd_open_dict(dict_paths.paths[idx]->dir, dict_paths.paths[idx]->fname);
 
 	dict_paths_idx = idx;
 
@@ -204,13 +204,13 @@ static void restore_last_used_dict(void)
 	char dict_name[128];
 	unsigned int i;
 
-	if (gp_app_cfg_scanf("gpdict", "selected_dict.txt", "%127s", dict_name) != 1) {
+	if (gp_app_cfg_scanf("gpdict", "selected_dict.txt", "%127[^\n]s", dict_name) != 1) {
 		set_dict(NULL, 0);
 		return;
 	}
 
 	for (i = 0; i < dict_paths.dict_cnt; i++) {
-		if (!strcmp(dict_paths.paths[i]->name, dict_name)) {
+		if (!strcmp(dict_paths.paths[i]->book_name, dict_name)) {
 			set_dict(NULL, i);
 			last_dict_idx = i;
 			return;
@@ -229,7 +229,7 @@ static int save_last_used_dict(gp_widget_event *ev)
 		return 0;
 
 	gp_app_cfg_printf("gpdict", "selected_dict.txt", "%s",
-	                  dict_paths.paths[dict_paths_idx]->name);
+	                  dict_paths.paths[dict_paths_idx]->book_name);
 	return 1;
 }
 
