@@ -51,6 +51,7 @@ static enum gp_markup_fmt entry_markup_fmt(struct sd_entry *entry)
 	switch (entry->fmt) {
 	case SD_ENTRY_PANGO_MARKUP:
 	case SD_ENTRY_HTML:
+	case SD_ENTRY_XDXF:
 		return GP_MARKUP_HTML;
 	default:
 		return GP_MARKUP_PLAINTEXT;
