@@ -12,3 +12,7 @@ https://cihar.com/software/slovnik/
 Slovak-English dictionaries:
 
 http://sk-spell.sk.cx/mass-msas
+
+![Screenshot](screenshot01.png)
+![Screenshot](screenshot02.png)
+
