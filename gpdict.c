@@ -47,16 +47,25 @@ static int res_get_elem(gp_widget *self, gp_widget_table_cell *cell, unsigned in
 	return 1;
 }
 
-static enum gp_markup_fmt entry_markup_fmt(struct sd_entry *entry)
+static void entry_markup_set(gp_widget *result, struct sd_entry *entry)
 {
+	int flags = 0;
+	enum gp_markup_fmt fmt;
+
 	switch (entry->fmt) {
 	case SD_ENTRY_PANGO_MARKUP:
-	case SD_ENTRY_HTML:
 	case SD_ENTRY_XDXF:
-		return GP_MARKUP_HTML;
+		flags = GP_MARKUP_HTML_KEEP_WS;
+	/* fallthrough */
+	case SD_ENTRY_HTML:
+		fmt = GP_MARKUP_HTML;
+	break;
 	default:
-		return GP_MARKUP_PLAINTEXT;
+		fmt = GP_MARKUP_PLAINTEXT;
+	break;
 	}
+
+	gp_widget_markup_set(result, fmt, flags, entry->data);
 }
 
 static void show_entry(unsigned int idx)
@@ -64,7 +73,7 @@ static void show_entry(unsigned int idx)
 	struct sd_entry *entry;
 
 	entry = sd_get_entry(dict, idx);
-	gp_widget_markup_set(result, entry_markup_fmt(entry), entry->data);
+	entry_markup_set(result, entry);
 	gp_widget_redraw(lookup_res);
 	gp_widget_label_set(lookup, sd_idx_to_word(dict, idx));
 	sd_free_entry(entry);
