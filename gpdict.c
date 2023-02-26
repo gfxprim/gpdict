@@ -110,7 +110,7 @@ int edit_event(gp_widget_event *ev)
 
 	switch (ev->sub_type) {
 	case GP_WIDGET_TBOX_POST_FILTER:
-		if (!sd_lookup_dict(dict, ev->self->tbox->buf, &tmp))
+		if (!sd_lookup(dict, ev->self->tbox->buf, &tmp))
 			return 1;
 
 		return 0;
@@ -119,7 +119,7 @@ int edit_event(gp_widget_event *ev)
 			return 1;
 		return 0;
 	case GP_WIDGET_TBOX_EDIT:
-		sd_lookup_dict(dict, ev->self->tbox->buf, &res);
+		sd_lookup(dict, ev->self->tbox->buf, &res);
 		show_entry(res.min);
 	break;
 	}
