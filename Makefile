@@ -1,7 +1,7 @@
 CFLAGS?=-W -Wall -Wextra -O2 -ggdb
 CFLAGS+=$(shell gfxprim-config --cflags)
 BIN=gpdict
-$(BIN): LDLIBS=-lgfxprim $(shell gfxprim-config --libs-widgets) -lstardict
+$(BIN): LDLIBS=-lgfxprim $(shell gfxprim-config --libs-widgets) -lgfxprim-curl -lstardict
 SOURCES=$(wildcard *.c)
 DEP=$(SOURCES:.c=.dep)
 OBJ=$(SOURCES:.c=.o)

@@ -3,9 +3,14 @@
  * Copyright (C) 2022-2023 Cyril Hrubis <metan@ucw.cz>
  */
 
+#include <errno.h>
+#include <string.h>
+
 #include <widgets/gp_widgets.h>
+#include <widgets/gp_dialog_download.h>
 #include <utils/gp_json.h>
 #include <utils/gp_vec.h>
+#include <utils/gp_user_path.h>
 
 struct dict_url {
 	char lang[16];
@@ -160,6 +165,19 @@ static int exit_dialog(gp_widget_event *ev)
 	return 0;
 }
 
+#define DESTDIR ".stardict/dic/"
+
+//TODO: Move to library
+static const char *fname(const char *path)
+{
+	size_t len = strlen(path);
+
+	while (len > 0 && path[len] != '/')
+		len--;
+
+	return path + len;
+}
+
 static int download_url(gp_widget_event *ev)
 {
 	struct url_dialog *url_dialog = ev->self->priv;
@@ -174,9 +192,31 @@ static int download_url(gp_widget_event *ev)
 		return 0;
 
 	unsigned int sel = url_dialog->url_table->tbl->selected_row;
+	char *url = url_dialog->urls[sel].url;
 
-	//TODO:!!!
-	printf("Downloading '%s'\n", url_dialog->urls[sel].url);
+	printf("Downloading '%s'\n", url);
+
+	if (gp_user_mkpath(DESTDIR, 0)) {
+		gp_dialog_msg_printf_run(GP_DIALOG_MSG_ERR, "Failed to create directory",
+                                         "'%s': %s", DESTDIR, strerror(errno));
+		return 0;
+	}
+
+	char *fname_path = gp_user_path(DESTDIR, fname(url));
+
+	if (gp_dialog_download_run(url_dialog->urls[sel].url, fname_path))
+		return 0;
+
+	//TODO: Cleanup
+	char *cmd;
+
+	asprintf(&cmd, "tar xf '%s' --strip-components=1 -C '%s/" DESTDIR "'", fname_path, gp_user_home());
+
+	printf("%s\n", cmd);
+	system(cmd);
+
+	unlink(fname_path);
+	free(fname_path);
 
 	return 0;
 }
