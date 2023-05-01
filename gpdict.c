@@ -122,6 +122,9 @@ int edit_event(gp_widget_event *ev)
 		sd_lookup(dict, ev->self->tbox->buf, &res);
 		show_entry(res.min);
 	break;
+	case GP_WIDGET_TBOX_PASTE:
+		gp_widget_tbox_clear(ev->self);
+	break;
 	}
 
 	return 0;
