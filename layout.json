@@ -5,7 +5,7 @@
   "widgets": [
     {"type": "hbox", "align": "fill", "widgets": [
      {"type": "vbox", "align": "fill", "border": "none", "widgets": [
-       {"type": "tbox", "halign": "fill", "on_event": "edit_event", "len": 25},
+       {"type": "tbox", "halign": "fill", "on_event": "edit_event", "len": 25, "help": "Word lookup"},
        {"type": "label", "halign": "fill", "uid": "lookup", "text": "---", "tattr": "large|left"},
        {"type": "markup", "align": "fill", "uid": "result", "text": "\n\n\n\n\n"},
        {"type": "label", "uid": "dict_name", "tattr": "center", "text": "no dictionary"}
