@@ -242,6 +242,13 @@ static int save_last_used_dict(gp_widget_event *ev)
 	return 1;
 }
 
+void reload_dicts(void)
+{
+	sd_free_dict_paths(&dict_paths);
+	sd_lookup_dict_paths(&dict_paths);
+	restore_last_used_dict();
+}
+
 int main(int argc, char *argv[])
 {
 	gp_htable *uids;

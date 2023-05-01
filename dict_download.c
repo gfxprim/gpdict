@@ -228,6 +228,8 @@ static const gp_widget_json_addr addrs[] = {
 	{}
 };
 
+void reload_dicts(void);
+
 void run_download_dialog(void)
 {
 	struct url_dialog url_dialog = {};
@@ -248,8 +250,10 @@ void run_download_dialog(void)
 	url_dialog.url_table = gp_widget_by_uid(uids, "url_table", GP_WIDGET_TABLE);
 	gp_htable_free(uids);
 
-	if (url_dialog.dialog.layout)
+	if (url_dialog.dialog.layout) {
 		gp_dialog_run(&url_dialog.dialog);
+		reload_dicts();
+	}
 
 	gp_widget_free(url_dialog.dialog.layout);
 
