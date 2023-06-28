@@ -185,10 +185,12 @@ static size_t get_dict(gp_widget *self, enum gp_widget_choice_op op)
 	return 0;
 }
 
-struct gp_widget_choice_ops dict_selection = {
-	.get_choice = get_dict_name,
-	.get = get_dict,
-	.set = set_dict,
+const gp_widget_choice_desc dict_selection = {
+	.ops = &(gp_widget_choice_ops) {
+		.get_choice = get_dict_name,
+		.get = get_dict,
+		.set = set_dict,
+	}
 };
 
 int select_layout_0(gp_widget_event *ev)

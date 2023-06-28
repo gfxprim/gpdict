@@ -30,7 +30,7 @@
    {"type": "vbox", "align": "fill",
    "widgets": [
      {"type": "label", "text": "Choose dictionary", "tattr": "bold"},
-     {"type": "radiobutton", "ops": "dict_selection"},
+     {"type": "radiobutton", "desc": "dict_selection"},
      {"type": "hbox", "align": "hfill", "border": "none", "uniform": true, "widgets": [
        {"type": "button", "align": "hfill", "label": "Back", "btype": "prev", "on_event": "select_layout_0"},
        {"type": "button", "align": "hfill", "label": "Download dicts", "on_event": "download_dicts"}
