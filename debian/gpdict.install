@@ -1,0 +1,4 @@
+usr/bin/gpdict
+etc/gp_apps/gpdict/*
+usr/share/applications/gpdict.desktop
+usr/share/gpdict/gpdict.png

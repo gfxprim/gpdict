@@ -1,0 +1,14 @@
+Source: gpdict
+Priority: extra
+Maintainer: Cyril Hrubis <metan@ucw.cz>
+Build-Depends: debhelper (>= 9.0), libgfxprim-dev, libstardict-dev, libgfxprim-curl-dev
+Standards-Version: 4.0.0
+Section: education
+Homepage: http://gfxprim.ucw.cz/
+
+Package: gpdict
+Section: electronics
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgfxprim1 (= ${binary:Version}), libstardict1 (= ${binary:Version}), libgfxprim-curl1 (= ${binary:Version})
+Description: A stardict compatible dictionary
+ Simple dictionary for a stardict compatible formats with a build-in dictionary download
