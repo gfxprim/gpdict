@@ -130,7 +130,7 @@ int edit_event(gp_widget_event *ev)
 	return 0;
 }
 
-static gp_app_info app_info = {
+gp_app_info app_info = {
 	.name = "gpdict",
 	.desc = "A stardict compatible dictionary",
 	.version = "1.0",
@@ -258,8 +258,6 @@ int main(int argc, char *argv[])
 {
 	gp_htable *uids;
 
-	gp_app_info_set(&app_info);
-
 	sd_lookup_dict_paths(&dict_paths);
 
 	gp_widget *layout = gp_app_layout_load("gpdict", &uids);
@@ -275,7 +273,7 @@ int main(int argc, char *argv[])
 
 	gp_app_on_event_set(save_last_used_dict);
 
-	gp_widgets_main_loop(layout, "gpdict", NULL, argc, argv);
+	gp_widgets_main_loop(layout, NULL, argc, argv);
 
 	return 0;
 }
