@@ -7,7 +7,7 @@ Section: education
 Homepage: http://gfxprim.ucw.cz/
 
 Package: gpdict
-Section: electronics
+Section: education
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libgfxprim1 (= ${binary:Version}), libstardict1 (= ${binary:Version}), libgfxprim-curl1 (= ${binary:Version})
 Description: A stardict compatible dictionary
