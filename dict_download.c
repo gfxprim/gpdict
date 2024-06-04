@@ -246,7 +246,7 @@ void run_download_dialog(void)
 		.addrs = addrs,
 	};
 
-	url_dialog.dialog.layout = gp_app_named_layout_load("gpdict", "layout_download", &callbacks, &uids);
+	url_dialog.dialog.layout = gp_app_layout_fragment_load("gpdict", "layout_download", &callbacks, &uids);
 	url_dialog.url_table = gp_widget_by_uid(uids, "url_table", GP_WIDGET_TABLE);
 	gp_htable_free(uids);
 
