@@ -198,7 +198,7 @@ int select_layout_0(gp_widget_event *ev)
 	if (ev->type != GP_WIDGET_EVENT_WIDGET)
 		return 0;
 
-	gp_widget_switch_layout(layout_switch, 0);
+	gp_widget_layout_switch_layout(layout_switch, 0);
 
 	return 0;
 }
@@ -208,7 +208,7 @@ int select_layout_1(gp_widget_event *ev)
 	if (ev->type != GP_WIDGET_EVENT_WIDGET)
 		return 0;
 
-	gp_widget_switch_layout(layout_switch, 1);
+	gp_widget_layout_switch_layout(layout_switch, 1);
 
 	return 0;
 }
