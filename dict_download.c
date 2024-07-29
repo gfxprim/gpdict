@@ -46,7 +46,7 @@ struct dict_url *load_urls(void)
 			goto err0;
 	}
 
-	if (gp_json_start(json) != GP_JSON_ARR) {
+	if (gp_json_reader_start(json) != GP_JSON_ARR) {
 		gp_json_warn(json, "Expected array");
 		goto err0;
 	}
