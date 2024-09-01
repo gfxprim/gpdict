@@ -97,8 +97,9 @@ enum urls_col_map {
 
 static int urls_get_cell(gp_widget *self, gp_widget_table_cell *cell, unsigned int col_id)
 {
-	unsigned int row = self->tbl->row_idx;
 	struct url_dialog *url_dialog = self->priv;
+	gp_widget_table_priv *tbl_priv = gp_widget_table_priv_get(self);
+	unsigned int row = tbl_priv->row_idx;
 
 	switch (col_id) {
 	case LANG:
@@ -121,22 +122,23 @@ static int urls_get_cell(gp_widget *self, gp_widget_table_cell *cell, unsigned i
 static int urls_seek_row(gp_widget *self, int op, unsigned int pos)
 {
 	struct url_dialog *url_dialog = self->priv;
+	gp_widget_table_priv *tbl_priv = gp_widget_table_priv_get(self);
 
 	if (!url_dialog)
 		return 0;
 
 	switch (op) {
 	case GP_TABLE_ROW_RESET:
-		self->tbl->row_idx = 0;
+		tbl_priv->row_idx = 0;
 	break;
 	case GP_TABLE_ROW_ADVANCE:
-		self->tbl->row_idx += pos;
+		tbl_priv->row_idx += pos;
 	break;
 	case GP_TABLE_ROW_MAX:
 		return gp_vec_len(url_dialog->urls);
 	}
 
-	if (self->tbl->row_idx >= gp_vec_len(url_dialog->urls))
+	if (tbl_priv->row_idx >= gp_vec_len(url_dialog->urls))
 		return 0;
 
 	return 1;
@@ -191,7 +193,7 @@ static int download_url(gp_widget_event *ev)
 	if (!url_dialog->url_table)
 		return 0;
 
-	unsigned int sel = url_dialog->url_table->tbl->selected_row;
+	unsigned int sel = gp_widget_table_sel_get(url_dialog->url_table);
 	char *url = url_dialog->urls[sel].url;
 
 	printf("Downloading '%s'\n", url);

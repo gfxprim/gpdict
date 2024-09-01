@@ -20,18 +20,20 @@ static gp_widget *layout_switch;
 
 static int lookup_res_seek_row(gp_widget *self, int op, unsigned int pos)
 {
+	gp_widget_table_priv *tbl_priv = gp_widget_table_priv_get(self);
+
 	switch (op) {
 	case GP_TABLE_ROW_RESET:
-                self->tbl->row_idx = 0;
+                tbl_priv->row_idx = 0;
         break;
         case GP_TABLE_ROW_ADVANCE:
-                self->tbl->row_idx += pos;
+                tbl_priv->row_idx += pos;
         break;
         case GP_TABLE_ROW_MAX:
                 return sd_lookup_res_cnt(&res);
         }
 
-        if (self->tbl->row_idx < sd_lookup_res_cnt(&res))
+        if (tbl_priv->row_idx < sd_lookup_res_cnt(&res))
                 return 1;
 
 	return 0;
@@ -39,10 +41,12 @@ static int lookup_res_seek_row(gp_widget *self, int op, unsigned int pos)
 
 static int res_get_elem(gp_widget *self, gp_widget_table_cell *cell, unsigned int col)
 {
+	gp_widget_table_priv *tbl_priv = gp_widget_table_priv_get(self);
+
 	if (col || !dict)
 		return 0;
 
-	cell->text = sd_idx_to_word(dict, res.min + self->tbl->row_idx);
+	cell->text = sd_idx_to_word(dict, res.min + tbl_priv->row_idx);
 
 	return 1;
 }
@@ -87,7 +91,7 @@ static int lookup_res_set(gp_widget_event *ev)
 	if (ev->sub_type != GP_WIDGET_TABLE_SELECT)
 		return 0;
 
-	show_entry(res.min + ev->self->tbl->selected_row);
+	show_entry(res.min + gp_widget_table_sel_get(ev->self));
 
 	return 0;
 }
@@ -110,7 +114,7 @@ int edit_event(gp_widget_event *ev)
 
 	switch (ev->sub_type) {
 	case GP_WIDGET_TBOX_POST_FILTER:
-		if (!sd_lookup(dict, ev->self->tbox->buf, &tmp))
+		if (!sd_lookup(dict, gp_widget_tbox_text(ev->self), &tmp))
 			return 1;
 
 		return 0;
@@ -119,7 +123,7 @@ int edit_event(gp_widget_event *ev)
 			return 1;
 		return 0;
 	case GP_WIDGET_TBOX_EDIT:
-		sd_lookup(dict, ev->self->tbox->buf, &res);
+		sd_lookup(dict, gp_widget_tbox_text(ev->self), &res);
 		show_entry(res.min);
 	break;
 	case GP_WIDGET_TBOX_PASTE:
