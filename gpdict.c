@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
 	result = gp_widget_by_uid(uids, "result", GP_WIDGET_MARKUP);
 	lookup = gp_widget_by_uid(uids, "lookup", GP_WIDGET_LABEL);
 	lookup_res = gp_widget_by_uid(uids, "lookup_res", GP_WIDGET_TABLE);
-	layout_switch = gp_widget_by_uid(uids, "layout_switch", GP_WIDGET_SWITCH);
+	layout_switch = gp_widget_by_uid(uids, "layout_switch", GP_WIDGET_LAYOUT_SWITCH);
 	dict_name = gp_widget_by_uid(uids, "dict_name", GP_WIDGET_LABEL);
 
 	restore_last_used_dict();
